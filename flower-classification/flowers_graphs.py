@@ -1,8 +1,8 @@
 import flowers_classification as fc
 import flowers_nn as fn
 import numpy as np
-import random
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 # Import data
 inputs = fc.inputs
@@ -14,9 +14,10 @@ data_type1 = inputs[:, labels[0, :] == 1]
 # Scatter plot with separating surface----------------
 # Scatter plot
 fig1, ax1 = plt.subplots(1, 1)
-ax1.scatter(data_type0[0, :], data_type0[1, :], color='red', label='Type 0')
-ax1.scatter(data_type1[0, :], data_type1[1, :], color='blue', label='Type 1')
-ax1.legend()
+c1 = ax1.scatter(data_type0[0, :], data_type0[1, :], color='red', label='Type 0')
+c2 = ax1.scatter(data_type1[0, :], data_type1[1, :], color='blue', label='Type 1')
+# h1, l1 = c1.legend_elements()
+# h2, l2 = c2.legend_elements()
 
 # Create a meshgrid to find separating surface
 x_min, x_max = inputs[0, :].min() - 0.3, inputs[0, :].max() + 0.3
@@ -33,6 +34,9 @@ verdict = np.array([round(i) for i in predictions[0]])
 verdict = verdict.reshape(X.shape)
 
 # Plot separating surface
-ax1.contour(X, Y, verdict, alpha=0.8, label='Separating curve')
-ax1.set_title('Iris but the flowers not the part of the eye')
+c = ax1.contour(X, Y, verdict, alpha=0.8)
+c_line = Line2D([], [], color='green', lw=2)
+ax1.set_title('Iris classification and separating curve')
+ax1.legend([c1, c2, c_line], ['Type 0', 'Type 1', 'Separating curve'])
+
 plt.show()

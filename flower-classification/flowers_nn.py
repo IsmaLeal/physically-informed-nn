@@ -42,7 +42,7 @@ def update_ws(W1, W2, dW1, dW2, rate):
     W2 -= rate * dW2
     return W1, W2
 
-def train(X, y, W1, W2, iterations, rate, N):
+def train(X, y, W1, W2, iterations, rate, N, isMain):
     for i in range(iterations):
         # Compute total loss
         yhat, A, A_aug = forward_propagation(X, W1, W2, N)
@@ -52,7 +52,7 @@ def train(X, y, W1, W2, iterations, rate, N):
         dW1, dW2 = back_propagation(X, y, yhat, W1, W2, A, A_aug, N)
         W1, W2 = update_ws(W1, W2, dW1, dW2, rate)
 
-        if i % 10000 == 0:
+        if (i % 10000 == 0) & (isMain == True):
             print(f'Iteration {i} - Loss: {loss:4f}')
 
     return W1, W2

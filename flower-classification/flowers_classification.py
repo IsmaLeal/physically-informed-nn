@@ -31,14 +31,23 @@ X_test[1:, :] = inputs[:, test_indices]                 # 3xN_test array
 W1 = np.random.rand(2, 3)   # Weights & biases for hidden layer
 W2 = np.random.rand(1, 3)   # Weights for final layer
 
+if __name__ == '__main__':
+    isMain = True
+else:
+    isMain = False
+
 # Train the network
-yhat, A, A_aug = flowers_nn.forward_propagation(X_train, W1, W2, N_train)   # Obtain initial predictions
-W1, W2 = flowers_nn.train(X_train, labels_train, W1, W2, 80000, 0.1, N_train)           # Train parameters
+yhat, A, A_aug = flowers_nn.forward_propagation(X_train, W1, W2, N_train)           # Obtain initial predictions
+W1, W2 = flowers_nn.train(X_train, labels_train, W1, W2,
+                          80000, 0.1, N_train, isMain=isMain)         # Train parameters
 
 # Test the network
-predictions, _, _ = flowers_nn.forward_propagation(X_test, W1, W2, N_test)                             # Test predictions
-print(f'Predictions: {predictions}\nActual results: {labels_test}')
+predictions, _, _ = flowers_nn.forward_propagation(X_test, W1, W2, N_test)          # Test predictions
 verdict = [round(i) for i in predictions[0]]                                        # Round predictions
 performance = [verdict[i] == labels_test[i] for i in range(len(labels_test))]       # Boolean list with successes
-print(f'Success predicting on the test set: {performance}')
-print(f'Accuracy: {np.mean(performance)}')
+
+if __name__ == '__main__':
+    print(f'Predictions: {predictions}\nActual results: {labels_test}')
+    print(f'Success predicting on the test set: {performance}')
+    print(f'Accuracy: {np.mean(performance)}')
+
