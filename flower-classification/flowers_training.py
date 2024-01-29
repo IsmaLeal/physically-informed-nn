@@ -51,3 +51,7 @@ if __name__ == '__main__':
     print(f'Success predicting on the test set: {performance}')
     print(f'Accuracy: {np.mean(performance)}')
 
+    # Save the trained weights and biases as .csv files
+    np.savetxt('W1.csv', W1, delimiter=',')
+    np.savetxt('W2.csv', W2, delimiter=',')
+

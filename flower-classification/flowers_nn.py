@@ -1,6 +1,4 @@
-from scipy.io import loadmat
 import numpy as np
-import random
 
 # Define nonlinear activation
 def sigmoid(z): return 1 / (1 + np.exp(-z))
