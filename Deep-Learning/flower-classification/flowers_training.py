@@ -27,12 +27,9 @@ ones_test = np.ones((1, N_test))
 X_test[0, :] = ones_test
 X_test[1:, :] = inputs[:, test_indices]                 # 3xN_test array
 
-# Define number of neurons/units in hidden layer
-m = int(input('How many neurons in the hidden layer?: '))
-
 # Randomly initialise weights & biases
-W1 = np.random.rand(m, 3)   # Weights & biases for hidden layer
-W2 = np.random.rand(1, m+1)   # Weights for final layer
+W1 = np.random.rand(2, 3)   # Weights & biases for hidden layer
+W2 = np.random.rand(1, 3)   # Weights for final layer
 
 if __name__ == '__main__':
     isMain = True
@@ -40,12 +37,12 @@ else:
     isMain = False
 
 # Train the network
-yhat, A, A_aug = flowers_nn.forward_propagation(X_train, W1, W2, N_train, m)           # Obtain initial predictions
+yhat, A, A_aug = flowers_nn.forward_propagation(X_train, W1, W2, N_train)           # Obtain initial predictions
 W1, W2 = flowers_nn.train(X_train, labels_train, W1, W2,
-                          600, 0.085, N_train, m, isMain=isMain)         # Train parameters
+                          80000, 0.1, N_train, isMain=isMain)         # Train parameters
 
 # Test the network
-predictions, _, _ = flowers_nn.forward_propagation(X_test, W1, W2, N_test, m)          # Test predictions
+predictions, _, _ = flowers_nn.forward_propagation(X_test, W1, W2, N_test)          # Test predictions
 verdict = [round(i) for i in predictions[0]]                                        # Round predictions
 performance = [verdict[i] == labels_test[i] for i in range(len(labels_test))]       # Boolean list with successes
 
@@ -55,5 +52,6 @@ if __name__ == '__main__':
     print(f'Accuracy: {np.mean(performance)}')
 
     # Save the trained weights and biases as .csv files
-    np.savetxt('weights_biases/W1.csv', W1, delimiter=',')
-    np.savetxt('weights_biases/W2.csv', W2, delimiter=',')
+    np.savetxt('W1.csv', W1, delimiter=',')
+    np.savetxt('W2.csv', W2, delimiter=',')
+

@@ -11,7 +11,6 @@ labels = data['type'].T
 W1 = np.genfromtxt('weights_biases/W1.csv', delimiter=',')
 W2 = np.genfromtxt('weights_biases/W2.csv', delimiter=',')
 
-# Create a variable to hold the data of each type of iris, to later plot them with different colours
 data_type0 = inputs[:, labels[0, :] == 0]
 data_type1 = inputs[:, labels[0, :] == 1]
 
@@ -19,11 +18,11 @@ data_type1 = inputs[:, labels[0, :] == 1]
 fig1, ax1 = plt.subplots(1, 1)
 
 # Create a meshgrid to find separating surface
-x_min, x_max = inputs[0, :].min() - 0.3, inputs[0, :].max() + 0.3   # boundaries in x
-y_min, y_max = inputs[1, :].min() - 0.3, inputs[1, :].max() + 0.3   # boundaries in y
+x_min, x_max = inputs[0, :].min() - 0.3, inputs[0, :].max() + 0.3
+y_min, y_max = inputs[1, :].min() - 0.3, inputs[1, :].max() + 0.3
 X, Y = np.meshgrid(np.arange(x_min, x_max, 0.01),
                    np.arange(y_min, y_max, 0.01))
-N_inputs = X.shape[0] * X.shape[1]                                  # Number of cells in the meshgrid
+N_inputs = X.shape[0] * X.shape[1]      # Number of cells in the meshgrid
 
 # Reshape the meshgrid to fit the accepted inputs of the NN (array where every row looks like 1, length, width)
 points = np.zeros((3, N_inputs))
